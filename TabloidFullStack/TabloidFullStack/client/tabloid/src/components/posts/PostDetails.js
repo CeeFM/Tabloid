@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getPost } from "../../Managers/PostManager";
 import { useParams } from "react-router-dom";
-import { Post } from "./Posts";
+import { Card, CardBody, CardImg } from "reactstrap";
+import { Link } from "react-router-dom";
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
@@ -16,12 +17,24 @@ export const PostDetails = () => {
   }
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-sm-12 col-lg-6">
-          <Post key={post.id} post={post} />
-        </div>
-      </div>
+    <div className="container d-flex justify-content-center">
+      <Card className="m-4" >
+        <CardBody>
+          <p>
+            <Link to={`/posts/${post.id}`}>
+              <strong>{post.title}</strong>
+            </Link>
+            {/* <CardImg top src={post.ImageLocation} style={{ width: '600px' }} /> */}
+          </p>
+          <p>{post.content}</p>
+          <p>
+          <Link to={`/userprofiles/${post.userProfile?.id}`}>
+            {post.userProfile?.displayName}
+          </Link>
+          </p>
+          <p>Published: {post.publishDateTime}</p>
+        </CardBody>
+      </Card>
     </div>
   );
 };
