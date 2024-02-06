@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { UserProfile } from "./UserProfile";
 import { getallprofiles } from "../Managers/UserProfileManager";
 
-export default function UserProfileList() {
+export const UserProfileList = () => {
     const [profiles, setProfiles] = useState([]);
 
     const getuserprofiles = () => {
@@ -14,8 +15,10 @@ export default function UserProfileList() {
 
     return (
         <div className="container">
+          <h2 className="row justify-content-center">User Profiles</h2>
         <div className="row justify-content-center">
           <div className="cards-column">
+            {console.log(profiles)}
             {profiles.map((profile) => (
               <UserProfile key={profile.id} profile={profile} />
             ))}
@@ -23,4 +26,6 @@ export default function UserProfileList() {
         </div>
       </div>
     )
-}
+};
+
+export default UserProfileList
