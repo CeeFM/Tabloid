@@ -5,6 +5,10 @@ export const getAllPosts = () => {
     .then((res) => res.json())
 };
 
+export const getAllPostsByUser = (id) => {
+  return fetch(`https://localhost:5001/api/Post/${id}`)
+    .then((res) => res.json())
+};
 
 const updatePostState = () => {
   // Fetch the updated list of posts from the backend or update the existing state

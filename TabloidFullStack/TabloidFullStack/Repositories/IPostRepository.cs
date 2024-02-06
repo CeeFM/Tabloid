@@ -6,5 +6,6 @@ namespace TabloidFullStack.Repositories
     {
         void DeletePost(int postId);
         List<Post> GetAllPublishedPosts();
+        List<Post> GetAllPublishedPostsByUser(int id);
     }
 }

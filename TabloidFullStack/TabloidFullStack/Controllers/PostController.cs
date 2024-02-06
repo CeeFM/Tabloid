@@ -21,11 +21,26 @@ namespace TabloidFullStack.Controllers
             return Ok(_postRepository.GetAllPublishedPosts());
         }
 
+        [HttpGet("{userId}")]
+        public IActionResult GetPostsByUser(int userId)
+        {
+
+            return Ok(_postRepository.GetAllPublishedPostsByUser(userId));
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _postRepository.DeletePost(id);
             return NoContent();
         }
+
+        //private int GetCurrentUserProfileId()
+        //{
+        //    string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    return int.Parse(id);
+        //}
+
     }
 }
+
