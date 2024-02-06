@@ -14,6 +14,11 @@ export const login = (userObject) => {
     });
 };
 
+export const getallprofiles = () => {
+  return fetch(`${apiUrl}/api/userprofile`)
+    .then((r) => r.json());
+};
+
 export const logout = () => {
       localStorage.clear()
 };
