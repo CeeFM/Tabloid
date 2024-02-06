@@ -24,6 +24,12 @@ namespace TabloidFullStack.Controllers
             return Ok(_userRepository.GetAll());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_userRepository.GetById(id));
+        }
+
         [HttpGet("GetByEmail")]
         public IActionResult GetByEmail(string email)
         {

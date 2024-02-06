@@ -19,6 +19,11 @@ export const getallprofiles = () => {
     .then((r) => r.json());
 };
 
+export const getprofilebyid = (id) => {
+  return fetch(`${apiUrl}/api/userprofile/${id}`)
+    .then((r) => r.json());
+}
+
 export const logout = () => {
       localStorage.clear()
 };
