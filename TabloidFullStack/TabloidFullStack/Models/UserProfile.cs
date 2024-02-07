@@ -24,6 +24,7 @@ namespace TabloidFullStack.Models
         [MaxLength(255)]
         public string Email { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public DateTime CreateDateTime { get; set; }
 
         [DataType(DataType.Url)]

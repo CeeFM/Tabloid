@@ -15,6 +15,9 @@ export const UserProfile = ({ profile }) => {
         <div className="row justify-content-center">
            User Type: <strong className="row justify-content-center">{profile?.userType?.name}</strong>
         </div>
+        <div className="text-center">
+        <Link to={`/users/${profile.id}`}><button className="btn btn-primary">View Details</button></Link>
+        </div>
         <br />
       </Card>
   );
