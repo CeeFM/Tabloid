@@ -12,6 +12,9 @@ export const UserProfileDetails = () => {
         getprofilebyid(id).then((thisprofile) => setProfile(thisprofile));
     }
 
+    const createdDate = new Date(profile.createDateTime);
+    const formattedDate = createdDate.toLocaleDateString('en-US');
+
     useEffect(() => {
         getuserprofile();
         }, []);
@@ -37,7 +40,7 @@ export const UserProfileDetails = () => {
         </div>
         <br />
         <div className="row justify-content-center">
-           User Created On <strong className="row justify-content-center">{profile.createDateTime}</strong>
+           User Created On <strong className="row justify-content-center">{formattedDate}</strong>
         </div>
         <br />
       </Card>
