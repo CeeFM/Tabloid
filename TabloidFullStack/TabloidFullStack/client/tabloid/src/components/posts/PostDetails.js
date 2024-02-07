@@ -8,6 +8,7 @@ export const PostDetails = () => {
   const [post, setPost] = useState();
   const { id } = useParams();
 
+
   useEffect(() => {
     getPost(id).then(setPost);
   }, []);
@@ -15,6 +16,9 @@ export const PostDetails = () => {
   if (!post) {
     return null;
   }
+
+  const createdDate = new Date(post.publishDateTime);
+  const formattedDate = createdDate.toLocaleDateString('en-US');
 
   return (
     <div className="container d-flex justify-content-center">
@@ -32,7 +36,7 @@ export const PostDetails = () => {
             {post.userProfile?.displayName}
           </Link>
           </p>
-          <p>Published: {post.publishDateTime}</p>
+          <p>Published: {formattedDate}</p>
         </CardBody>
       </Card>
     </div>
