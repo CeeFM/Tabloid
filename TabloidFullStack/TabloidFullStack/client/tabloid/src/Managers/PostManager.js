@@ -20,6 +20,10 @@ const updatePostState = () => {
       });
 };
 
+export const getPost = (id, updatePostState) => {
+  return fetch(`https://localhost:5001/api/Post/post/${id}`).then((res) => res.json())
+  .then(updatePostState)
+};
 
 export const deletePost = (id, updatePostState) => {
   return fetch(`https://localhost:5001/api/Post/${id}`, { method: "DELETE" })
