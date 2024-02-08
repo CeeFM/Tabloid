@@ -73,7 +73,6 @@ export const PostForm = () => {
             }
             )
 
-
             .then(setPostEntry({
                 Title: "",
                 ImageLocation: "",
