@@ -12,9 +12,9 @@ function refreshPage() {
 
   return (
 <>
-<div><strong>Username:</strong> {comment?.userProfile?.displayName}</div>
 <div><strong>Subject:</strong> {comment.subject}</div>
 <div><strong>Comment:</strong> {comment.content}</div>
+<div><strong>Posted By:</strong> {comment?.userProfile?.displayName}</div>
 <div><strong>Posted On:</strong> {createdDate}</div>
 </>
   );
