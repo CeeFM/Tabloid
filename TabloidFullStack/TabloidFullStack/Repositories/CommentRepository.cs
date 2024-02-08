@@ -16,11 +16,12 @@ namespace TabloidFullStack.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime, p.Id as ArticleId, p.Title, p.Content, p.ImageLocation, p.CreateDateTime as PostCreateDate, p.IsApproved, p.CategoryId, p.UserProfileId as PostAuthorProfileId, up.Id AS UserId, up.DisplayName, up.FirstName, up.LastName, up.Email, up.CreateDateTime AS UserCreateDate, up.ImageLocation AS UserImage, up.UserTypeId
+                       SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime, p.Id as ArticleId, p.Title, p.Content AS PostContent, p.ImageLocation, p.CreateDateTime as PostCreateDate, p.IsApproved, p.PublishDateTime, p.CategoryId, p.UserProfileId as PostAuthorProfileId, up.Id AS UserId, up.DisplayName, up.FirstName, up.LastName, up.Email, up.CreateDateTime AS UserCreateDate, up.ImageLocation AS UserImage, up.UserTypeId, ca.[Name] AS CategoryName, ut.[Name] AS UserTypeName
                        FROM Comment c
                        LEFT JOIN Post p ON p.Id = c.PostId
                        LEFT JOIN UserProfile up ON up.Id = c.UserProfileId
                        LEFT JOIN UserType ut ON up.UserTypeId = ut.Id
+                       LEFT JOIN Category ca ON p.CategoryId = ca.Id
                        WHERE p.Id = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", postId);
@@ -45,38 +46,45 @@ namespace TabloidFullStack.Repositories
         {
             return new Comment()
             {
-                /*                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Title = reader.GetString(reader.GetOrdinal("Title")),
-                                Content = reader.GetString(reader.GetOrdinal("Content")),
-                                ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
-                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
-                                PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
-                                PostId = reader.GetInt32(reader.GetOrdinal("PostId")),
-                                Category = new Category()
-                                {
-                                    Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
-                                    Name = reader.GetString(reader.GetOrdinal("CategoryName"))
-                                },
-                                UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
-                                UserProfile = new UserProfile()
-                                {
-                                    Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
-                                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                                    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
-                                    Email = reader.GetString(reader.GetOrdinal("Email")),
-                                    CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
-                                    ImageLocation = DbUtils.GetString(reader, "AvatarImage"),
-                                    UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
-                                    UserType = new UserType()
-                                    {
-                                        Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
-                                        Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
-                                    }*/
+                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                Subject = reader.GetString(reader.GetOrdinal("Subject")),
+                Content = reader.GetString(reader.GetOrdinal("Content")),
+                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                PostId = reader.GetInt32(reader.GetOrdinal("PostId")),
+                UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                Post = new Post()
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("ArticleId")),
+                    Title = reader.GetString(reader.GetOrdinal("Title")),
+                    Content = reader.GetString(reader.GetOrdinal("PostContent")),
+                    ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                    CreateDateTime = reader.GetDateTime(reader.GetOrdinal("PostCreateDate")),
+                    PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                    CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                    Category = new Category()
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                        Name = reader.GetString(reader.GetOrdinal("CategoryName"))
+                    }
+                },
+                UserProfile = new UserProfile()
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("UserId")),
+                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    CreateDateTime = reader.GetDateTime(reader.GetOrdinal("UserCreateDate")),
+                    ImageLocation = DbUtils.GetString(reader, "UserImage"),
+                    UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                    UserType = new UserType()
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                        Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
+                    }
+                }
             };
         }
+
     }
-
-
-}   
-
+}

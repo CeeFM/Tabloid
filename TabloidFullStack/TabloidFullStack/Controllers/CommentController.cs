@@ -19,7 +19,7 @@ namespace TabloidFullStack.Controllers
             return Ok(_postRepository.GetAllPublishedPosts());
         }*/
 
-        [HttpGet("comment/{postId}")]
+        [HttpGet("{postId}")]
         public IActionResult GetPostById(int postId)
         {
             return Ok(_commentRepository.GetAllCommentsByPostId(postId));
