@@ -20,6 +20,16 @@ const updatePostState = () => {
       });
 };
 
+export const addPost = (singlePost) => {
+  return fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(singlePost),
+  });
+};
+
 export const getPost = (id, updatePostState) => {
   return fetch(`https://localhost:5001/api/Post/post/${id}`).then((res) => res.json())
   .then(updatePostState)

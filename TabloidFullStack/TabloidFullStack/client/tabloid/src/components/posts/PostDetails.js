@@ -28,8 +28,8 @@ export const PostDetails = () => {
             <Link to={`/posts/${post.id}`}>
               <strong>{post.title}</strong>
             </Link>
-            {/* <CardImg top src={post.ImageLocation} style={{ width: '600px' }} /> */}
           </p>
+          <CardImg top src={post.imageLocation} style={{ width: '600px' }} />
           <p>{post.content}</p>
           <p>
           <Link to={`/userprofiles/${post.userProfile?.id}`}>
