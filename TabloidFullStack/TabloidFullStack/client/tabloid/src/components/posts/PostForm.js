@@ -3,11 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import { addPost } from '../../Managers/PostManager';
 import { useNavigate } from "react-router-dom";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 export const PostForm = () => {
+
 
     const localTabloidUser = localStorage.getItem("userProfile");
     const tabloidUserObject = JSON.parse(localTabloidUser);
@@ -20,7 +20,7 @@ export const PostForm = () => {
         CategoryId: "",
         IsApproved: true,
         CreateDateTime: new Date(),
-        PublishDateTime: new Date(),
+        PublishDateTime: "",
     })
 
     const handleControlledInputChange = (e) => {
@@ -37,6 +37,7 @@ export const PostForm = () => {
         newPostEntry.IsApproved = e.target.checked;
         setPostEntry(newPostEntry);
     };
+
 
     const updatePostState = () => {
         // Fetch the updated list of posts from the backend or update the existing state
@@ -63,13 +64,15 @@ export const PostForm = () => {
             CreateDateTime: new Date(),
         }
 
-        entryToSend.UserProfileId = 1
-
         addPost(entryToSend)
             .then((p) => {
-                // Navigate the user back to the home route
-                navigate("/");
-            })
+                p.json()
+                .then(post => {
+                    navigate(`/posts/${post.id}`)
+                })
+            }
+                   )
+            
 
             .then(setPostEntry({
                 Title: "",
@@ -79,10 +82,8 @@ export const PostForm = () => {
                 CategoryId: "",
                 IsApproved: true,
                 CreateDateTime: new Date(),
-                PublishDateTime: new Date(),
+                PublishDateTime: "",
             }))
-
-            .then(updatePostState)
 
             .catch(error => {
                 console.error('Error adding post:', error);
@@ -91,51 +92,38 @@ export const PostForm = () => {
     }
 
     return (
+        <Form onSubmit={saveEntry}>
+            <fieldset>
+                <FormGroup>
+                    <Label htmlFor="Title">Title</Label>
+                    <Input id="Title" name="Title" type="text" value={postEntry.Title} onChange={handleControlledInputChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="Content">Content</Label>
+                    <Input id="Content" name="Content" type="text" value={postEntry.Content} onChange={handleControlledInputChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="ImageLocation">Image URL</Label>
+                    <Input id="ImageLocation" name="ImageLocation" type="text" value={postEntry.ImageLocation} onChange={handleControlledInputChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="PublishDateTime">Publish Date:</Label>
+                    <Input id="PublishDateTime" type="date" name="PublishDateTime" value={postEntry.PublishDateTime} onChange={handleControlledInputChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="Category">Category</Label>
+                    <Input type="text" name="CategoryId" id="Category" value={postEntry.CategoryId} onChange={handleControlledInputChange}/>
+                </FormGroup>
+                <FormGroup>
+                    <Input id="IsApproved" type="checkbox" defaultChecked={postEntry.IsApproved} onChange={handleCheckboxChange}  />
+                    <Label htmlFor="IsApproved">Approve Post </Label>
+                </FormGroup>
+                <FormGroup>
+                    <Button>Save Post</Button>
+                </FormGroup>
+            </fieldset>
+        </Form>
 
-        <form id="postForm" onSubmit={saveEntry}>
-            <div className="field">
-                <label className="label">Title</label>
-                <div className="control">
-                    <input name="Title" className="input" type="text" placeholder="Title of Post" value={postEntry.Title} onChange={handleControlledInputChange} />
-                </div>
-            </div>
-            <div className="field">
-                <label className="label">Image Url</label>
-                <div className="control">
-                    <input className="input" type="text" name="ImageLocation" value={postEntry.ImageLocation} onChange={handleControlledInputChange} />
-                </div>
-            </div>
-            <div className="field">
-                <label className="label">Caption</label>
-                <div className="control">
-                    <textarea name="Content" className="text" placeholder="Enter a caption" value={postEntry.Content} onChange={handleControlledInputChange}></textarea>
-                </div>
-            </div>
-            <div className="form-outline datepicker">
-            <label htmlFor="PublishDateTime" className="form-label">Publish Date: </label>
-                <DatePicker
-                    selected={postEntry.PublishDateTime}
-                    onChange={(date) => setPostEntry({ ...postEntry, PublishDateTime: date })}
-                    className="form-control"
-                />
-            </div>
-            <div className="form-check">
-                <input
-                    className="form-check-input"
-                    type="checkbox"
-                    name="IsApproved"
-                    checked={postEntry.IsApproved}
-                    onChange={handleCheckboxChange}
-                />
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                    Approve Post?
-                </label>
-            </div>
-            <div className="control">
-                <button id="submitbutton" type="submit" className="button is-primary" onClick={saveEntry}>Submit</button>
-            </div>
-
-        </form>
 
     )
 }
