@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UserProfile } from "./UserProfile";
-import { getallprofiles, getprofilebyid } from "../Managers/UserProfileManager";
+import { getallprofiles, getprofilebyid } from "../../Managers/UserProfileManager";
 import { Link, useParams } from "react-router-dom";
 import { Card, CardImg } from "reactstrap";
 
