@@ -67,12 +67,12 @@ export const PostForm = () => {
         addPost(entryToSend)
             .then((p) => {
                 p.json()
-                .then(post => {
-                    navigate(`/posts/${post.id}`)
-                })
+                    .then(post => {
+                        navigate(`/posts/${post.id}`)
+                    })
             }
-                   )
-            
+            )
+
 
             .then(setPostEntry({
                 Title: "",
@@ -112,10 +112,38 @@ export const PostForm = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="Category">Category</Label>
-                    <Input type="text" name="CategoryId" id="Category" value={postEntry.CategoryId} onChange={handleControlledInputChange}/>
+                    <Input type="select" name="CategoryId" id="Category" value={postEntry.CategoryId} onChange={handleControlledInputChange} >
+                        <option value="1">
+                            Technology
+                        </option>
+                        <option value="2">
+                            Politics
+                        </option>
+                        <option value="3">
+                            Science
+                        </option>
+                        <option value="4">
+                            Cooking
+                        </option>
+                        <option value="5">
+                            Music
+                        </option>
+                        <option value="6">
+                            Cthulhu Sightings
+                        </option>
+                        <option value="7">
+                            History
+                        </option>
+                        <option value="8">
+                            Home and Garden
+                        </option>
+                        <option value="9">
+                            Entertainment
+                        </option>
+                    </Input>
                 </FormGroup>
                 <FormGroup>
-                    <Input id="IsApproved" type="checkbox" defaultChecked={postEntry.IsApproved} onChange={handleCheckboxChange}  />
+                    <Input id="IsApproved" type="checkbox" defaultChecked={postEntry.IsApproved} onChange={handleCheckboxChange} />
                     <Label htmlFor="IsApproved">Approve Post </Label>
                 </FormGroup>
                 <FormGroup>
