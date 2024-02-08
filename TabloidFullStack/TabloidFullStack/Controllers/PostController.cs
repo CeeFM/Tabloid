@@ -47,6 +47,18 @@ namespace TabloidFullStack.Controllers
             return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Post post)
+        {
+            if (id != post.Id)
+            {
+                return BadRequest();
+            }
+
+            _postRepository.EditPost(post);
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -54,11 +66,6 @@ namespace TabloidFullStack.Controllers
             return NoContent();
         }
 
-        //private int GetCurrentUserProfileId()
-        //{
-        //    string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    return int.Parse(id);
-        //}
 
     }
 }
