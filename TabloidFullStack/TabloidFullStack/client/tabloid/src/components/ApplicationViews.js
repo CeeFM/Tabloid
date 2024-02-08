@@ -6,6 +6,7 @@ import PostList from "./posts/PostList";
 import UserPostList from "./posts/MyPostList";
 import UserProfileDetails from "./UserProfiles/UserProfileDetails";
 import PostDetails from "./posts/PostDetails";
+import PostForm from "./posts/PostForm";
 
 export default function ApplicationViews() {
 
@@ -16,6 +17,7 @@ export default function ApplicationViews() {
         <Route path="/users" element={<UserProfileList />} />
         <Route path="/users/:id" element={<UserProfileDetails />} />
         <Route path="/posts" element={<PostList />} />
+        <Route path="/addpost" element={<PostForm />} />
         <Route path="/posts/:id" element={<PostDetails/>} />
         <Route path="/userposts" element={<UserPostList />} />
       </Routes>
