@@ -22,7 +22,8 @@ namespace TabloidFullStack.Repositories
                        LEFT JOIN UserProfile up ON up.Id = c.UserProfileId
                        LEFT JOIN UserType ut ON up.UserTypeId = ut.Id
                        LEFT JOIN Category ca ON p.CategoryId = ca.Id
-                       WHERE p.Id = @Id";
+                       WHERE p.Id = @Id
+                       ORDER BY c.CreateDateTime DESC";
 
                     cmd.Parameters.AddWithValue("@Id", postId);
 
