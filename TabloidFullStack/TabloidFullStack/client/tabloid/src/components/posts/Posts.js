@@ -59,7 +59,7 @@ export const Post = ({ deletePost, post, updatePostState }) => {
             </p>
             <p>{post.content}</p>
             <p>
-              <Link to={`/userprofiles/${post.userProfile?.id}`}>
+              <Link to={`/users/${post.userProfile?.id}`}>
                 {post.userProfile?.displayName}
               </Link>
             </p>
