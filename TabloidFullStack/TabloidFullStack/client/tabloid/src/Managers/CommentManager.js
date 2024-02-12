@@ -5,4 +5,12 @@ export const getcommentsbypostid = (postid) => {
       .then((r) => r.json());
   }
 
-  
+  export const addComment = (singleComment) => {
+    return fetch(`${apiUrl}/api/comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(singleComment),
+    });
+  };  
