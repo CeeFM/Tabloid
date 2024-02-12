@@ -77,13 +77,13 @@ export const PostDetails = () => {
       </Card>
       </div>
       <div className="text-center">
-      <button className="btn btn-primary m-2" onClick={showComments} id="view-comments"> View Comments</button>
+      <button className="btn btn-primary m-2" onClick={showComments} id="view-comments"> Hide Comments</button>
       <button className="btn btn-primary" onClick={addComments} id="add-comment"> Add Comment</button>
       </div>
       <div className="col-sm-12 col-md-6 offset-md-3" id="comment-form" style={{display: "none"}}>
-            <CommentForm post={post}/>
+            <CommentForm post={post} />
       </div>
-      <div className="col-sm-12 col-md-6 offset-md-3" id="comments" style={{display: "none"}}>
+      <div className="col-sm-12 col-md-6 offset-md-3" id="comments">
         <br />
           <div className="text-center"><strong>COMMENTS:</strong></div>
           <br />

@@ -46,7 +46,6 @@ export const CommentForm = ({ post }) => {
                     })
             }
             )
-
             .then(setComment({
                 Subject: "",
                 Content: "",
@@ -54,6 +53,7 @@ export const CommentForm = ({ post }) => {
                 PostId: post.id,
                 CreateDateTime: new Date(),
             }))
+            .then(window.location.reload())
 
             .catch(error => {
                 console.error('Error adding comment:', error);
