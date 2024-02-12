@@ -23,8 +23,9 @@ export const UserProfileDetails = () => {
       <>
       <Card>
       <Link to={`/users/`}><button className="btn btn-primary">Back to User Profile List</button></Link>  
-      <div className="row justify-content-center">
-      <CardImg className="image" top src={profile.imageLocation} alt={profile.displayName} />
+      <div className="text-center">
+      <img className="image" id="userImg" src={profile.imageLocation} alt={profile.displayName} />
+
       </div>
       <br />
         <p className="row justify-content-center">
