@@ -43,6 +43,30 @@ namespace TabloidFullStack.Repositories
             }
         }
 
+        public void Add(Comment comment)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Comment (
+                            Subject, Content, UserProfileId, CreateDateTime, PostId )
+                        OUTPUT INSERTED.ID
+                        VALUES (
+                            @Subject, @Content, @UserProfileId, @CreateDateTime, @PostId )";
+                    cmd.Parameters.AddWithValue("@Subject", comment.Subject);
+                    cmd.Parameters.AddWithValue("@Content", comment.Content);
+                    cmd.Parameters.AddWithValue("@CreateDateTime", comment.CreateDateTime);
+                    cmd.Parameters.AddWithValue("@UserProfileId", comment.UserProfileId);
+                    cmd.Parameters.AddWithValue("@PostId", comment.PostId);
+
+                    comment.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
         private Comment NewCommentFromReader(SqlDataReader reader)
         {
             return new Comment()

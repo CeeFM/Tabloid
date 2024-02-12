@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TabloidFullStack.Models;
 using TabloidFullStack.Repositories;
 
 namespace TabloidFullStack.Controllers
@@ -25,19 +26,26 @@ namespace TabloidFullStack.Controllers
             return Ok(_commentRepository.GetAllCommentsByPostId(postId));
         }
 
-/*        [HttpGet("{userId}")]
-        public IActionResult GetPostsByUser(int userId)
+        [HttpPost]
+        public IActionResult Post(Comment? comment)
         {
-
-            return Ok(_postRepository.GetAllPublishedPostsByUser(userId));
+            _commentRepository.Add(comment);
+            return CreatedAtAction("Get", new { id = comment.Id }, comment);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            _postRepository.DeletePost(id);
-            return NoContent();
-        }*/
+        /*        [HttpGet("{userId}")]
+                public IActionResult GetPostsByUser(int userId)
+                {
+
+                    return Ok(_postRepository.GetAllPublishedPostsByUser(userId));
+                }
+
+                [HttpDelete("{id}")]
+                public IActionResult Delete(int id)
+                {
+                    _postRepository.DeletePost(id);
+                    return NoContent();
+                }*/
 
         //private int GetCurrentUserProfileId()
         //{

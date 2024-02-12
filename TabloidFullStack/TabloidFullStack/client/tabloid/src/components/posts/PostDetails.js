@@ -5,6 +5,7 @@ import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getcommentsbypostid } from "../../Managers/CommentManager";
 import { Comment } from "./Comment"; 
+import CommentForm from "./CommentForm";
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
@@ -29,6 +30,8 @@ export const PostDetails = () => {
 
   const commentContainer = document.getElementById("comments");
   const viewCommentBtn = document.getElementById("view-comments");
+  const commentForm = document.getElementById("comment-form");
+  const addCommentBtn = document.getElementById("add-comment");
   const createdDate = new Date(post.publishDateTime);
   const formattedDate = createdDate.toLocaleDateString('en-US');
 
@@ -41,6 +44,16 @@ export const PostDetails = () => {
       viewCommentBtn.innerHTML = "View Comments";
     }
       };
+
+  const addComments = () => {
+  if (commentForm.style.display != "block") {
+    commentForm.style.display = "block";
+    addCommentBtn.innerHTML = "Hide Comment Form";
+  } else {
+    commentForm.style.display = "none";
+    addCommentBtn.innerHTML = "Add Comment";
+  }
+    };
 
   return (
     <>
@@ -64,7 +77,11 @@ export const PostDetails = () => {
       </Card>
       </div>
       <div className="text-center">
-      <button className="btn btn-primary" onClick={showComments} id="view-comments"> View Comments</button>
+      <button className="btn btn-primary m-2" onClick={showComments} id="view-comments"> View Comments</button>
+      <button className="btn btn-primary" onClick={addComments} id="add-comment"> Add Comment</button>
+      </div>
+      <div className="col-sm-12 col-md-6 offset-md-3" id="comment-form" style={{display: "none"}}>
+            <CommentForm post={post}/>
       </div>
       <div className="col-sm-12 col-md-6 offset-md-3" id="comments" style={{display: "none"}}>
         <br />
