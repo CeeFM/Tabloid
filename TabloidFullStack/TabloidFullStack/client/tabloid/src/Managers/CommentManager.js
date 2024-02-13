@@ -14,3 +14,7 @@ export const getcommentsbypostid = (postid) => {
       body: JSON.stringify(singleComment),
     });
   };  
+
+  export const deleteComment = (id) => {
+    return fetch(`https://localhost:5001/api/Comment/${id}`, { method: "DELETE" });
+  };
