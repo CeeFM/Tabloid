@@ -3,7 +3,7 @@ import { getPost } from "../../Managers/PostManager";
 import { useParams } from "react-router-dom";
 import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getcommentsbypostid } from "../../Managers/CommentManager";
+import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManager";
 import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
 
@@ -54,6 +54,7 @@ export const PostDetails = () => {
     addCommentBtn.innerHTML = "Add Comment";
   }
     };
+  
 
   return (
     <>
