@@ -40,6 +40,18 @@ namespace TabloidFullStack.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Comment comment)
+        {
+            if (id != comment.Id)
+            {
+                return BadRequest();
+            }
+
+            _commentRepository.Update(comment);
+            return NoContent();
+        }
+
         /*        [HttpGet("{userId}")]
                 public IActionResult GetPostsByUser(int userId)
                 {
