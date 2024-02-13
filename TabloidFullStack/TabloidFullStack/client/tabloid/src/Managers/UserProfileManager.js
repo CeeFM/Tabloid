@@ -44,8 +44,6 @@ export const register = (userObject, password) => {
 
 
 
-
-
 // return (
 //   <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register,  }}>
 //      {props.children}
