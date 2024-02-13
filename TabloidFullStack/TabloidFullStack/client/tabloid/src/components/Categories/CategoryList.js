@@ -25,6 +25,7 @@ return (
                 </tr>
               ))}
           </table>
+          <a href="http://localhost:3000/category/form"><button>Add Category</button></a>
         </div>
   );
 }
