@@ -47,5 +47,49 @@ namespace TabloidFullStack.Repositories
                 }
             }
         }
+
+        public List<Category> GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Id, Name FROM Category " +
+                                      "WHERE Id = @Id";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new List<Category>() {new Category()
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Name = reader.GetString(reader.GetOrdinal("Name")),
+                    }};
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+        public void Delete(int categoryId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Category " +
+                                      "WHERE Id = @CategoryId";
+                    DbUtils.AddParameter(cmd, "@CategoryId", categoryId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
