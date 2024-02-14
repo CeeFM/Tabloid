@@ -6,16 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { getAllCategories } from "../../Managers/CategoryManager";
 
+
 export const PostForm = () => {
     const [categories, setCategories] = useState([]);
 
     const getCategories = () => {
         getAllCategories().then((categories) => setCategories(categories));
-      }
+    }
 
-      useEffect(() => {
+    useEffect(() => {
         getCategories();
-      }, []);
+    }, []);
 
     const localTabloidUser = localStorage.getItem("userProfile");
     const tabloidUserObject = JSON.parse(localTabloidUser);
@@ -119,9 +120,13 @@ export const PostForm = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="Category">Category</Label>
-                    <Input type="select" name="CategoryId" id="Category" value={postEntry.CategoryId} onChange={handleControlledInputChange} >
-                        <option value=""> ⬇️ Select a Category ⬇️ </option>
-                        {categories.map((category) => <option key={category.id}>{category.name}</option>)}
+                    <Input type="select" name="CategoryId" id="Category" value={postEntry.CategoryId} onChange={handleControlledInputChange}>
+                        <option value="">⬇️ Select a Category ⬇️</option>
+                        {categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
                     </Input>
                 </FormGroup>
                 <FormGroup>
