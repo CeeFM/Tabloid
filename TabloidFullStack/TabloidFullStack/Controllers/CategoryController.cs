@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TabloidFullStack.Models;
 using TabloidFullStack.Repositories;
+using TabloidFullStack.Utils;
 
 namespace TabloidFullStack.Controllers
 {
@@ -26,6 +27,28 @@ namespace TabloidFullStack.Controllers
             _categoryRepository.Add(category);
             return CreatedAtAction(
                 "Get", new { id = category.Id }, category);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _categoryRepository.GetById(id);
+
+                if (_categoryRepository == null)
+                {
+                    return NotFound($"Category with ID {id} not found");
+                }
+
+                _categoryRepository.Delete(id);
+
+                //No Content
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, $"Server Error: {ex.Message}");
+            }
         }
     }
 }
