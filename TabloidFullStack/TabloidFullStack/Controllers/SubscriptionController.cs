@@ -17,6 +17,12 @@ namespace TabloidFullStack.Controllers
             _subscriptionRepository = subscriptionRepository;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_subscriptionRepository.GetAll());
+        }
+
         [HttpPost]
         public IActionResult Post(Subscription? subscription)
         {

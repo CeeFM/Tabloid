@@ -96,7 +96,7 @@ export const PostDetails = () => {
             </>
           ))}
       </div>
-      <SubscriptionButton/>
+      <SubscriptionButton post ={post}/>
       </>
   );
 };

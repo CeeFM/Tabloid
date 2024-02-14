@@ -1,13 +1,21 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { addPost } from '../../Managers/PostManager';
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-
+import { getAllCategories } from "../../Managers/CategoryManager";
 
 export const PostForm = () => {
+    const [categories, setCategories] = useState([]);
 
+    const getCategories = () => {
+        getAllCategories().then((categories) => setCategories(categories));
+      }
+
+      useEffect(() => {
+        getCategories();
+      }, []);
 
     const localTabloidUser = localStorage.getItem("userProfile");
     const tabloidUserObject = JSON.parse(localTabloidUser);
@@ -112,33 +120,8 @@ export const PostForm = () => {
                 <FormGroup>
                     <Label for="Category">Category</Label>
                     <Input type="select" name="CategoryId" id="Category" value={postEntry.CategoryId} onChange={handleControlledInputChange} >
-                        <option value="1">
-                            Technology
-                        </option>
-                        <option value="2">
-                            Politics
-                        </option>
-                        <option value="3">
-                            Science
-                        </option>
-                        <option value="4">
-                            Cooking
-                        </option>
-                        <option value="5">
-                            Music
-                        </option>
-                        <option value="6">
-                            Cthulhu Sightings
-                        </option>
-                        <option value="7">
-                            History
-                        </option>
-                        <option value="8">
-                            Home and Garden
-                        </option>
-                        <option value="9">
-                            Entertainment
-                        </option>
+                        <option value=""> ⬇️ Select a Category ⬇️ </option>
+                        {categories.map((category) => <option key={category.id}>{category.name}</option>)}
                     </Input>
                 </FormGroup>
                 <FormGroup>

@@ -1,4 +1,4 @@
-const subUrl = '/api/Subscription';
+const subUrl = 'https://localhost:5001/api/Subscription';
 
 export const addSubscription = (singleSubscription) => {
     return fetch(subUrl, {

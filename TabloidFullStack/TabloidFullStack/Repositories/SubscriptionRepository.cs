@@ -8,6 +8,34 @@ namespace TabloidFullStack.Repositories
 
         public SubscriptionRepository(IConfiguration config) : base(config) { }
 
+        public List<Subscription> GetAll()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id, SubscriberUserProfileId, ProviderUserProfileId, BeginDateTime, EndDateTime
+                        FROM Subscription";
+                    var reader = cmd.ExecuteReader();
+                    var subscriptions = new List<Subscription>();
+                    while (reader.Read())
+                    {
+                        subscriptions.Add(new Subscription()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            SubscriberUserProfileId = DbUtils.GetInt(reader, "SubscriberUserProfileId"),
+                            ProviderUserProfileId = DbUtils.GetInt(reader, "ProviderUserProfileId"),
+                            BeginDateTime = DbUtils.GetDateTime(reader, "BeginDateTime"),
+                            EndDateTime = DbUtils.GetNullableDateTime(reader, "EndDateTime")
+                        });
+                    }
+                    reader.Close();
+                    return subscriptions;
+                }
+            }
+        }
         public void Add(Subscription subscription)
         {
             using (var conn = Connection)
