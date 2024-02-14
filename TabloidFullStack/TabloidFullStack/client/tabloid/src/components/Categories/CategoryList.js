@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getAllCategories } from "../../Managers/CategoryManager";
+import { Button } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 //export a list of Categories(and their Id)
 export const CategoryList = () => {
   const [categories, setCategories] = useState([]);
+
+  const navigate = useNavigate();
+  
   const getCategories = () => {
     getAllCategories().then(allCategories => setCategories(allCategories));
   };
@@ -22,6 +27,7 @@ return (
                 <tr key={category.id} >
                   <td>{category.id}</td>
                   <td>{category.name}</td>
+                  <Button onClick={(e) => { e.preventDefault(); navigate(`/category/edit/${category.id}`);}}> Edit Category </Button>
                 </tr>
               ))}
           </table>

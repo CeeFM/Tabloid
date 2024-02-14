@@ -18,3 +18,19 @@ export const addCategory = (singleCategory) => {
         body: JSON.stringify(singleCategory),
     });
 };
+
+export const getCategoryById = (id) => {
+    return fetch(`${baseUrl}/${id}`) 
+    .then((res) => res.json()
+    );
+}
+
+export const editCategory = (category) => {
+    return fetch(`${baseUrl}/${category.id}`, {
+        method: "PUT", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
+    });
+};
