@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using TabloidFullStack.Models;
 using TabloidFullStack.Utils;
 namespace TabloidFullStack.Repositories
@@ -88,6 +89,51 @@ namespace TabloidFullStack.Repositories
                                       "WHERE Id = @CategoryId";
                     DbUtils.AddParameter(cmd, "@CategoryId", categoryId);
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void UpdateCategory(Category category)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                 UPDATE Category
+                 SET [Name] = @name
+                 WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+                    cmd.Parameters.AddWithValue("@id", category.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public Category GetCategoryById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+            SELECT Id, [Name] FROM Category
+            WHERE Id = @id
+            ";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        Category category = new Category()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                        };
+                        reader.Close();
+                        return category;
+                    }
+                    reader.Close();
+                    return null;
                 }
             }
         }
