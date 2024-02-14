@@ -19,12 +19,25 @@ export const addCategory = (singleCategory) => {
     });
 };
 
+export const getCategoryById = (id) => {
+    return fetch(`${baseUrl}/${id}`) 
+    .then((res) => res.json()
+    );
+}
+
+export const editCategory = (category) => {
+    return fetch(`${baseUrl}/${category.id}`, {
+        method: "PUT", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
+    });
+};
+
 export const deleteCategory = (id) => {
     return fetch(`${baseUrl}/${id}`, {
       method: "DELETE"
     })
   }
-
-  export const getCategoryById = (id) => {
-    return fetch(`${baseUrl}/${id}`).then((res) => res.json());
-  };
+  
