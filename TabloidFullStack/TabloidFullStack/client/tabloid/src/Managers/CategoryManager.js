@@ -40,7 +40,4 @@ export const deleteCategory = (id) => {
       method: "DELETE"
     })
   }
-
-  export const getCategoryById = (id) => {
-    return fetch(`${baseUrl}/${id}`).then((res) => res.json());
-  };
+  
