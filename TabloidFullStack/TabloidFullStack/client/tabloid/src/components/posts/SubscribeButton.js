@@ -1,47 +1,53 @@
 import React, { useState } from 'react';
 
-const SubscribeButton = ({ authorId, profile }) => {
+const SubscriptionButton = (profile) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleSubscribe = async () => {
+  const localTabloidUser = localStorage.getItem("userProfile");
+  const tabloidUserObject = JSON.parse(localTabloidUser);
+
+  // Function to handle the subscription button click
+  const handleSubscriptionClick = () => {
     try {
-      // Replace with your actual backend API endpoint
-      const apiUrl = '/api/subscribe';
-  
-      // Replace with the authorId you want to subscribe to
-      const authorId = profile.Id; // Example author ID
-  
-      // Make the API call
-      const response = await fetch(apiUrl, {
+      // Assuming you have the necessary subscription data
+      const subscriptionData = {
+        SubscriberUserProfileId: tabloidUserObject,
+        ProviderUserProfileId: profile.id,
+        BeginDateTime: new Date().toISOString(), // Replace with actual date
+        EndDateTime: new Date().toISOString(), // Replace with actual date
+      };
+
+      // Make an HTTP POST request to your API endpoint
+      const response = fetch('/api/Subscriptions', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', 
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ authorId }), // Pass relevant data
+        body: JSON.stringify(subscriptionData),
       });
-  
+
       if (response.ok) {
-        // Handle success (e.g., show a success message)
         setIsSubscribed(true);
+        // Handle success (e.g., show a success message)
       } else {
-        // Handle error cases (e.g., invalid input, server error)
+        // Handle errors (e.g., show an error message)
         console.error('Error subscribing:', response.statusText);
       }
     } catch (error) {
-      console.error('Error while subscribing:', error);
+      console.error('Error:', error.message);
     }
   };
-  
 
   return (
     <div>
+      {/* Display subscription status */}
       {isSubscribed ? (
-        <p>Subscribed!</p>
+        <p>You are subscribed!</p>
       ) : (
-        <button onClick={handleSubscribe}>Subscribe</button>
+        <button onClick={handleSubscriptionClick}>Subscribe</button>
       )}
     </div>
   );
 };
 
-export default SubscribeButton;
+export default SubscriptionButton;

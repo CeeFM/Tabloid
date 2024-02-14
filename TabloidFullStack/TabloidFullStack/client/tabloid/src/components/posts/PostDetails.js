@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManager";
 import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
+import SubscriptionButton from "./SubscribeButton";
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
@@ -95,6 +96,7 @@ export const PostDetails = () => {
             </>
           ))}
       </div>
+      <SubscriptionButton/>
       </>
   );
 };
