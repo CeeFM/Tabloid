@@ -17,7 +17,7 @@ namespace TabloidFullStack.Repositories
                         cmd.CommandText = @"
                         SELECT Id, PostId, ReactionId, UserProfileId
                         FROM PostReaction
-                        ORDER BY PostId";
+                        ORDER BY Id DESC";
                         var reader = cmd.ExecuteReader();
                         var postreactions = new List<PostReaction>();
                         while (reader.Read())
@@ -47,7 +47,8 @@ namespace TabloidFullStack.Repositories
                         cmd.CommandText = @"
                         SELECT Id, PostId, ReactionId, UserProfileId
                         FROM PostReaction
-                        WHERE PostId = @postId";
+                        WHERE PostId = @postId
+                        ORDER BY Id DESC";
                     cmd.Parameters.AddWithValue("@postId", postId);
                     var reader = cmd.ExecuteReader();
                         var postreactions = new List<PostReaction>();
