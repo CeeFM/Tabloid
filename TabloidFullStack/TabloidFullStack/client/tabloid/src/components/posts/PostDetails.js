@@ -72,8 +72,8 @@ const getReaction = () => {
         ReactionId: "",
         PostId: post.id
     }
-    addPostReaction()
-  }
+    addPostReaction(reactionToSend)
+  };
   
 
   return (
@@ -99,7 +99,7 @@ const getReaction = () => {
 
         {reactions.map((reaction) => (
             <>
-              <PostReaction post={post} reaction={reaction} />
+              <PostReaction key={reaction.id} post={post} reaction={reaction} />
             </>
           ))}
           </div>
