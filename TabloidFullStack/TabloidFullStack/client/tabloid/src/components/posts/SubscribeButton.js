@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { addSubscription, getAllSubscriptionsByUser } from '../../Managers/SubscriptionManager';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
-const SubscriptionButton = ({post}) => {
+const SubscriptionButton = ({ post }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [modal, setModal] = useState(false); // State for controlling the modal
+
+  const toggleModal = () => setModal(!modal); // Function to toggle the modal
 
   const handleSubscriptionClick = async () => {
     try {
@@ -12,28 +16,28 @@ const SubscriptionButton = ({post}) => {
 
       // Fetch user subscriptions
       const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id);
+      console.log(subscriptions);
 
-      // Check if the user is already subscribed to the author
       const alreadySubscribed = subscriptions.some(
-        subscription => subscription.ProviderUserProfileId === post.userProfileId
+        subscription => subscription.providerUserProfileId === post.userProfileId
       );
 
       if (alreadySubscribed) {
-        console.log('Already subscribed to this author');
+        toggleModal(); // Show the modal if already subscribed
         return;
       }
 
-      // Assuming you have the necessary subscription data
+      // subscription data
       const subscriptionData = {
         SubscriberUserProfileId: tabloidUserObject.id,
         ProviderUserProfileId: post.userProfileId,
         BeginDateTime: new Date().toISOString(), // Replace with actual date
         EndDateTime: null,
       };
-  
-      // Make an HTTP POST request to your API endpoint
+
+      // HTTP POST request 
       const response = await addSubscription(subscriptionData);
-  
+
       if (response.ok) {
         setIsSubscribed(true);
       } else {
@@ -43,12 +47,23 @@ const SubscriptionButton = ({post}) => {
       console.error('Error:', error.message);
     }
   };
-  
+
   return (
     <div>
-        <button onClick={handleSubscriptionClick}>
-          {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-        </button>
+      <button onClick={handleSubscriptionClick}>
+        {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+      </button>
+
+      {/* Modal component */}
+      <Modal isOpen={modal} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>Already Subscribed</ModalHeader>
+        <ModalBody>
+          You are already subscribed to this author.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggleModal}>Close</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

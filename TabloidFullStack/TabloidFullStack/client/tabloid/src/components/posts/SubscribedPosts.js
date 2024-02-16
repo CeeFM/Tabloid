@@ -14,7 +14,6 @@ const PostsBySubscribedAuthors = () => {
         const fetchPosts = async () => {
              // Fetch all subscriptions for the current user
              const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id); 
-             console.log(subscriptions);
              
              let allPosts = [];
  
