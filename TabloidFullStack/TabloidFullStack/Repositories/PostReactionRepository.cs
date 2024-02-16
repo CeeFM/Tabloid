@@ -76,10 +76,10 @@ namespace TabloidFullStack.Repositories
                 {
                     cmd.CommandText = @"
                         INSERT INTO PostReaction (
-                            Id, PostId, ReactionId, UserProfileId )
+                            PostId, ReactionId, UserProfileId )
                         OUTPUT INSERTED.ID
                         VALUES (
-                            @Id, @PostId, @ReactionId, @UserProfileId )";
+                            @PostId, @ReactionId, @UserProfileId )";
                     cmd.Parameters.AddWithValue("@PostId", postreaction.PostId);
                     cmd.Parameters.AddWithValue("@ReactionId", postreaction.ReactionId);
                     cmd.Parameters.AddWithValue("@UserProfileId", postreaction.UserProfileId);

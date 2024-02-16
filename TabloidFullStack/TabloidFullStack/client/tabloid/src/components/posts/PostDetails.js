@@ -3,23 +3,16 @@ import { getPost } from "../../Managers/PostManager";
 import { useParams } from "react-router-dom";
 import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManager";
+import { getcommentsbypostid } from "../../Managers/CommentManager";
 import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
-import { addPostReaction, getreactions } from "../../Managers/PostReactionManager";
+import { getreactions } from "../../Managers/PostReactionManager";
 import { PostReaction } from "./PostReaction";
 
 export const PostDetails = () => {
-  const localTabloidUser = localStorage.getItem("userProfile");
-	const tabloidUserObject = JSON.parse(localTabloidUser);
   const [post, setPost] = useState();
   const [comments, setComments] = useState([]);
   const [reactions, setReactions] = useState([]);
-  const [postReaction, setPostReaction] = useState({
-    UserProfileId: tabloidUserObject.id,
-    ReactionId: "",
-    PostId: ""
-})
   const { id } = useParams();
 
   const getpostcomments = () => {
@@ -65,15 +58,7 @@ const getReaction = () => {
     addCommentBtn.innerHTML = "Add Comment";
   }
     };
-  
-  const addReaction = () => {
-    const reactionToSend = {
-        ...postReaction,
-        ReactionId: "",
-        PostId: post.id
-    }
-    addPostReaction(reactionToSend)
-  };
+
   
 
   return (
