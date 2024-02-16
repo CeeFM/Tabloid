@@ -25,19 +25,13 @@ export const PostReaction = ({ post, reaction }) => {
       }, []);
 
     const addReaction = () => {
+        console.log(postReactionsList);
         const reactionToSend = {
             ...postReaction
         };
         addPostReaction(reactionToSend);
-        const newReactions = fetchNewReactions();
-        setPostReactionsList((prevState) => [...prevState, newReactions[0]]);
-        console.log(postReactionsList);
+        window.location.reload();
       };
-
-    const fetchNewReactions = () => {
-       return fetch(`https://localhost:5001/api/postreaction/`)
-      .then((r) => r.json());
-    }
 
     return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" src={reaction.imageLocation} />  </button>
 

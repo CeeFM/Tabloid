@@ -3,18 +3,12 @@ import { getPost } from "../../Managers/PostManager";
 import { useParams } from "react-router-dom";
 import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import { getcommentsbypostid } from "../../Managers/CommentManager";
 import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
 import { getreactions } from "../../Managers/PostReactionManager";
 import { PostReaction } from "./PostReaction";
-=======
-import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManager";
-import { Comment } from "./Comment";
-import CommentForm from "./CommentForm";
 import SubscriptionButton from "./SubscribeButton";
->>>>>>> main
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
@@ -57,7 +51,6 @@ const getReaction = () => {
   };
 
   const addComments = () => {
-<<<<<<< HEAD
   if (commentForm.style.display != "block") {
     commentForm.style.display = "block";
     addCommentBtn.innerHTML = "Hide Comment Form";
@@ -66,48 +59,6 @@ const getReaction = () => {
     addCommentBtn.innerHTML = "Add Comment";
   }
     };
-
-  
-
-  return (
-    <>
-    <div className="container d-flex justify-content-center">
-      <Card className="m-4" >
-        <CardBody>
-          <p>
-            <Link to={`/posts/${post.id}`}>
-              <strong>{post.title}</strong>
-            </Link>
-          </p>
-          <CardImg top src={post.imageLocation} style={{ width: '600px' }} />
-          <p>{post.content}</p>
-          <p>
-          <Link to={`/users/${post.userProfile?.id}`}>
-            {post.userProfile?.displayName}
-          </Link>
-          </p>
-          <p>Published: {formattedDate}</p>
-        </CardBody>
-        <div className="text-center">
-
-        {reactions.map((reaction) => (
-            <>
-              <PostReaction key={reaction.id} post={post} reaction={reaction} />
-            </>
-          ))}
-          </div>
-      </Card>
-      
-=======
-    if (commentForm.style.display != "block") {
-      commentForm.style.display = "block";
-      addCommentBtn.innerHTML = "Hide Comment Form";
-    } else {
-      commentForm.style.display = "none";
-      addCommentBtn.innerHTML = "Add Comment";
-    }
-  };
-
 
   return (
     <>
@@ -128,9 +79,16 @@ const getReaction = () => {
             </p>
             <p>Published: {formattedDate}</p>
           </CardBody>
+          <div className="text-center">
+
+{reactions.map((reaction) => (
+    <>
+      <PostReaction key={reaction.id} post={post} reaction={reaction} />
+    </>
+  ))}
+  </div>
           <SubscriptionButton post={post} />
         </Card>
->>>>>>> main
       </div>
       <div className="text-center">
         <button className="btn btn-primary m-2" onClick={showComments} id="view-comments"> Hide Comments</button>
