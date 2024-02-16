@@ -3,11 +3,18 @@ import { getPost } from "../../Managers/PostManager";
 import { useParams } from "react-router-dom";
 import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { getcommentsbypostid } from "../../Managers/CommentManager";
 import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
 import { getreactions } from "../../Managers/PostReactionManager";
 import { PostReaction } from "./PostReaction";
+=======
+import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManager";
+import { Comment } from "./Comment";
+import CommentForm from "./CommentForm";
+import SubscriptionButton from "./SubscribeButton";
+>>>>>>> main
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
@@ -17,7 +24,7 @@ export const PostDetails = () => {
 
   const getpostcomments = () => {
     getcommentsbypostid(id).then((thesecomments) => setComments(thesecomments));
-}
+  }
 
 const getReaction = () => {
   getreactions().then((thesereactions) => setReactions(thesereactions));
@@ -47,9 +54,10 @@ const getReaction = () => {
       commentContainer.style.display = "none";
       viewCommentBtn.innerHTML = "View Comments";
     }
-      };
+  };
 
   const addComments = () => {
+<<<<<<< HEAD
   if (commentForm.style.display != "block") {
     commentForm.style.display = "block";
     addCommentBtn.innerHTML = "Hide Comment Form";
@@ -90,26 +98,60 @@ const getReaction = () => {
           </div>
       </Card>
       
+=======
+    if (commentForm.style.display != "block") {
+      commentForm.style.display = "block";
+      addCommentBtn.innerHTML = "Hide Comment Form";
+    } else {
+      commentForm.style.display = "none";
+      addCommentBtn.innerHTML = "Add Comment";
+    }
+  };
+
+
+  return (
+    <>
+      <div className="container d-flex justify-content-center">
+        <Card className="m-4" >
+          <CardBody>
+            <p>
+              <Link to={`/posts/${post.id}`}>
+                <strong>{post.title}</strong>
+              </Link>
+            </p>
+            <CardImg top src={post.imageLocation} style={{ width: '600px' }} />
+            <p>{post.content}</p>
+            <p>
+              <Link to={`/users/${post.userProfile?.id}`}>
+                {post.userProfile?.displayName}
+              </Link>
+            </p>
+            <p>Published: {formattedDate}</p>
+          </CardBody>
+          <SubscriptionButton post={post} />
+        </Card>
+>>>>>>> main
       </div>
       <div className="text-center">
-      <button className="btn btn-primary m-2" onClick={showComments} id="view-comments"> Hide Comments</button>
-      <button className="btn btn-primary" onClick={addComments} id="add-comment"> Add Comment</button>
+        <button className="btn btn-primary m-2" onClick={showComments} id="view-comments"> Hide Comments</button>
+        <button className="btn btn-primary" onClick={addComments} id="add-comment"> Add Comment</button>
       </div>
-      <div className="col-sm-12 col-md-6 offset-md-3" id="comment-form" style={{display: "none"}}>
-            <CommentForm post={post} />
+      <div className="col-sm-12 col-md-6 offset-md-3" id="comment-form" style={{ display: "none" }}>
+        <CommentForm post={post} />
       </div>
       <div className="col-sm-12 col-md-6 offset-md-3" id="comments" style={{display: "block"}}>
         <br />
-          <div className="text-center"><strong>COMMENTS:</strong></div>
-          <br />
-          {comments.map((comment) => (
-            <>
+        <div className="text-center"><strong>COMMENTS:</strong></div>
+        <br />
+        {comments.map((comment) => (
+          <>
             <Comment key={comment.id} comment={comment} />
             <br />
-            </>
-          ))}
+          </>
+        ))}
       </div>
-      </>
+
+    </>
   );
 };
 
