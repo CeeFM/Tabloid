@@ -48,7 +48,8 @@ namespace TabloidFullStack.Repositories
                         SELECT Id, PostId, ReactionId, UserProfileId
                         FROM PostReaction
                         WHERE PostId = @postId";
-                        var reader = cmd.ExecuteReader();
+                    cmd.Parameters.AddWithValue("@postId", postId);
+                    var reader = cmd.ExecuteReader();
                         var postreactions = new List<PostReaction>();
                         while (reader.Read())
                         {
