@@ -29,6 +29,7 @@ return (
             </tr>
           ))}
       </table>
+      <a href="http://localhost:3000/tag/form"><button>Add Tag</button></a>
     </div>
 );
 }
