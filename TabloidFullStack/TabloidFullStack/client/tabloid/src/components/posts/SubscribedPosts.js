@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getAllSubscriptionsByUser } from '../../Managers/SubscriptionManager';
 import { getAllPostsByUser } from '../../Managers/PostManager';
+import { Card, CardBody, CardImg } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const PostsBySubscribedAuthors = () => {
     const [subposts, setSubposts] = useState([]);
@@ -10,19 +12,24 @@ const PostsBySubscribedAuthors = () => {
 
     useEffect(() => {
         const fetchPosts = async () => {
-            try {
-                // Fetch all subscriptions for the current user
-                const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id); 
-                // Get the list of author IDs from subscriptions
-                const authorIds = subscriptions.map(subscription => subscription.ProviderUserProfileId);
-                // Fetch posts written by the subscribed authors
-                const posts = await getAllPostsByUser(authorIds);
-                // Update the state with the fetched posts
-                setSubposts(posts);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
+             // Fetch all subscriptions for the current user
+             const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id); 
+             console.log(subscriptions);
+             
+             let allPosts = [];
+ 
+             // Iterate through subscriptions to fetch posts from each subscribed user
+             for (const subscription of subscriptions) {
+                 const authorId = subscription.providerUserProfileId;
+                 // Fetch posts written by the subscribed author
+                 const posts = await getAllPostsByUser(authorId);
+                 // Concatenate the fetched posts to the existing array
+                 allPosts = allPosts.concat(posts);
+             }
+ 
+             // Update the state with the fetched posts
+             setSubposts(allPosts);
+     };
         fetchPosts();
     }, []);
 
@@ -31,7 +38,22 @@ const PostsBySubscribedAuthors = () => {
             <h2>Your Feed:</h2>
             <ul>
                 {subposts.map(subpost => (
-                    <li key={subpost.id}>{subpost.title}</li>
+                   <Card className="m-4" >
+                   <CardBody>
+                     <p>
+                       <Link to={`/posts/${subpost.id}`}>
+                         <strong>{subpost.title}</strong>
+                       </Link>
+                     </p>
+                     <CardImg top src={subpost.imageLocation} style={{ width: '600px' }} />
+                     <p>{subpost.content}</p>
+                     <p>
+                       <Link to={`/users/${subpost.userProfile?.id}`}>
+                         {subpost.userProfile?.displayName}
+                       </Link>
+                     </p>
+                   </CardBody>
+                 </Card>
                 ))}
             </ul>
         </div>
