@@ -11,10 +11,10 @@ const PostsBySubscribedAuthors = () => {
     const tabloidUserObject = JSON.parse(localTabloidUser);
 
     useEffect(() => {
+        
         const fetchPosts = async () => {
              // Fetch all subscriptions for the current user
              const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id); 
-             
              let allPosts = [];
  
              // Iterate through subscriptions to fetch posts from each subscribed user
@@ -23,15 +23,16 @@ const PostsBySubscribedAuthors = () => {
                  // Fetch posts written by the subscribed author
                  const posts = await getAllPostsByUser(authorId);
                  // Concatenate the fetched posts to the existing array
-                 allPosts = allPosts.concat(posts);
+                 allPosts = [...allPosts, ...posts];
              }
- 
+
              // Update the state with the fetched posts
              setSubposts(allPosts);
      };
         fetchPosts();
     }, []);
 
+    //HTML Display
     return (
         <div>
             <h2>Your Feed:</h2>

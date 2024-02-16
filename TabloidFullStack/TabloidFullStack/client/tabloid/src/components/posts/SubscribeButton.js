@@ -4,13 +4,13 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
 const SubscriptionButton = ({ post }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [modal, setModal] = useState(false); // State for controlling the modal
-
-  const toggleModal = () => setModal(!modal); // Function to toggle the modal
+  const [modal, setModal] = useState(false); 
+  const toggleModal = () => setModal(!modal); 
 
   const handleSubscriptionClick = async () => {
     try {
 
+      // Logged in user date
       const localTabloidUser = localStorage.getItem('userProfile');
       const tabloidUserObject = JSON.parse(localTabloidUser);
 
@@ -18,12 +18,13 @@ const SubscriptionButton = ({ post }) => {
       const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id);
       console.log(subscriptions);
 
+      // set a conditional to check if pro
       const alreadySubscribed = subscriptions.some(
         subscription => subscription.providerUserProfileId === post.userProfileId
       );
 
       if (alreadySubscribed) {
-        toggleModal(); // Show the modal if already subscribed
+        toggleModal();
         return;
       }
 
@@ -31,13 +32,14 @@ const SubscriptionButton = ({ post }) => {
       const subscriptionData = {
         SubscriberUserProfileId: tabloidUserObject.id,
         ProviderUserProfileId: post.userProfileId,
-        BeginDateTime: new Date().toISOString(), // Replace with actual date
+        BeginDateTime: new Date().toISOString(), 
         EndDateTime: null,
       };
 
       // HTTP POST request 
       const response = await addSubscription(subscriptionData);
 
+      // If the response if okay set isSubscribed to true 
       if (response.ok) {
         setIsSubscribed(true);
       } else {
@@ -54,7 +56,6 @@ const SubscriptionButton = ({ post }) => {
         {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
       </button>
 
-      {/* Modal component */}
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>Already Subscribed</ModalHeader>
         <ModalBody>
