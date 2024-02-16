@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
-import { addSubscription } from '../../Managers/SubscriptionManager';
+import { addSubscription, getAllSubscriptionsByUser } from '../../Managers/SubscriptionManager';
 
 const SubscriptionButton = ({post}) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const localTabloidUser = localStorage.getItem("userProfile");
-  const tabloidUserObject = JSON.parse(localTabloidUser);
-
   const handleSubscriptionClick = async () => {
     try {
+
+      const localTabloidUser = localStorage.getItem('userProfile');
+      const tabloidUserObject = JSON.parse(localTabloidUser);
+
+      // Fetch user subscriptions
+      const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id);
+
+      // Check if the user is already subscribed to the author
+      const alreadySubscribed = subscriptions.some(
+        subscription => subscription.ProviderUserProfileId === post.userProfileId
+      );
+
+      if (alreadySubscribed) {
+        console.log('Already subscribed to this author');
+        return;
+      }
+
       // Assuming you have the necessary subscription data
       const subscriptionData = {
         SubscriberUserProfileId: tabloidUserObject.id,

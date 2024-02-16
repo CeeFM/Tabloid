@@ -10,3 +10,8 @@ export const addSubscription = (singleSubscription) => {
     });
   };
   
+
+  export const getAllSubscriptionsByUser = (id) => {
+    return fetch(`https://localhost:5001/api/Subscription/${id}`)
+      .then((res) => res.json())
+  };

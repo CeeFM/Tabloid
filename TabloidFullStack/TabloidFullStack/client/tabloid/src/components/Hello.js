@@ -1,14 +1,11 @@
 import React from "react";
+import PostsBySubscribedAuthors from "./posts/SubscribedPosts";
 
 export default function SubcriptionList() {
+  const localTabloidUser = localStorage.getItem('userProfile');
+  const tabloidUserObject = JSON.parse(localTabloidUser);
+
   return (
-    <span style={{
-      position: "fixed",
-      left: 0,
-      right: 0,
-      top: "50%",
-      marginTop: "-0.5rem",
-      textAlign: "center",
-    }}>hello</span>
+  <PostsBySubscribedAuthors id={tabloidUserObject.id} />
   );
 }
