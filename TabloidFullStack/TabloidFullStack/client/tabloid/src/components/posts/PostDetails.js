@@ -6,22 +6,32 @@ import { Link } from "react-router-dom";
 import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManager";
 import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
+import { addPostReaction, getreactions } from "../../Managers/PostReactionManager";
 
 export const PostDetails = () => {
+  const localTabloidUser = localStorage.getItem("userProfile");
+	const tabloidUserObject = JSON.parse(localTabloidUser);
   const [post, setPost] = useState();
   const [comments, setComments] = useState([]);
+  const [reactions, setReactions] = useState([]);
+  const [postReaction, setPostReaction] = useState({
+    UserProfileId: tabloidUserObject.id,
+    ReactionId: "",
+    PostId: ""
+})
   const { id } = useParams();
 
   const getpostcomments = () => {
     getcommentsbypostid(id).then((thesecomments) => setComments(thesecomments));
 }
 
-  useEffect(() => {
-    getPost(id).then(setPost);
-  }, []);
+const getReaction = () => {
+  getreactions().then((thesereactions) => setReactions(thesereactions));
+}
 
   useEffect(() => {
-    getpostcomments();
+    getPost(id).then(setPost).then(getpostcomments).then(getReaction);
+;
   }, []);
 
   if (!post) {
@@ -55,6 +65,15 @@ export const PostDetails = () => {
   }
     };
   
+  const addReaction = () => {
+    const reactionToSend = {
+        ...postReaction,
+        ReactionId: "",
+        PostId: post.id
+    }
+    addPostReaction()
+  }
+  
 
   return (
     <>
@@ -75,7 +94,16 @@ export const PostDetails = () => {
           </p>
           <p>Published: {formattedDate}</p>
         </CardBody>
+        <div className="text-center">
+
+        {reactions.map((reaction) => (
+            <>
+          <button className="btn btn-secondary m-1"><img className="reaction-btn" src={reaction.imageLocation} />  </button>
+            </>
+          ))}
+          </div>
       </Card>
+      
       </div>
       <div className="text-center">
       <button className="btn btn-primary m-2" onClick={showComments} id="view-comments"> Hide Comments</button>
@@ -84,7 +112,7 @@ export const PostDetails = () => {
       <div className="col-sm-12 col-md-6 offset-md-3" id="comment-form" style={{display: "none"}}>
             <CommentForm post={post} />
       </div>
-      <div className="col-sm-12 col-md-6 offset-md-3" id="comments">
+      <div className="col-sm-12 col-md-6 offset-md-3" id="comments" style={{display: "block"}}>
         <br />
           <div className="text-center"><strong>COMMENTS:</strong></div>
           <br />
