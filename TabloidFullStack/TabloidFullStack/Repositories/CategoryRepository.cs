@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using TabloidFullStack.Models;
 using TabloidFullStack.Utils;
+
 namespace TabloidFullStack.Repositories
 {
     public class CategoryRepository : BaseRepository, ICategoryRepository
