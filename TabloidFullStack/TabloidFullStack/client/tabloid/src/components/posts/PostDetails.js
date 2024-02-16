@@ -7,6 +7,7 @@ import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManage
 import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
 import { addPostReaction, getreactions } from "../../Managers/PostReactionManager";
+import { PostReaction } from "./PostReaction";
 
 export const PostDetails = () => {
   const localTabloidUser = localStorage.getItem("userProfile");
@@ -98,7 +99,7 @@ const getReaction = () => {
 
         {reactions.map((reaction) => (
             <>
-          <button className="btn btn-secondary m-1"><img className="reaction-btn" src={reaction.imageLocation} />  </button>
+              <PostReaction post={post} reaction={reaction} />
             </>
           ))}
           </div>
