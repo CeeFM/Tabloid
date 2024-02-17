@@ -52,14 +52,16 @@ export const PostReaction = ({ post, reaction }) => {
         {reactionCount.length === 0 || userReactionCount.length === 0 ? (
             <>
                 <button className="btn btn-secondary m-1" onClick={addReaction}>
-                <img className="reaction-btn" alt="" src={reaction.imageLocation} />
-                {reactionCount.length}
+                <img className="reaction-btn" alt={reaction.name} src={reaction.imageLocation} />
+                <br />
+                <span className="h6 m-3">{reactionCount.length}</span>
                 </button>
             </>
         ) : (
             <button className="btn btn-primary m-1" >
-            <img className="reaction-btn" alt="" src={reaction.imageLocation} />
-            {reactionCount.length}
+            <img className="reaction-btn" alt={reaction.name} src={reaction.imageLocation} />
+            <br />
+            <span className="h6 m-3">{reactionCount.length}</span>
             </button> 
         )}
         </>
