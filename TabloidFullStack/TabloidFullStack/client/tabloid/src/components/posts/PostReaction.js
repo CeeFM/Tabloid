@@ -36,13 +36,33 @@ export const PostReaction = ({ post, reaction }) => {
         window.location.reload();
       };
     
-    const logState = () => {
-        console.log(reactionCount)
+    const buttonChange = () => {
+        if (reactionCount.length === 0 || userReactionCount.length === 0) {
+            return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" alt="" src={reaction.imageLocation} /> {reactionCount.length} </button>  
+        }
+        else {
+            return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" alt="" src={reaction.imageLocation} /> {reactionCount.length} </button>
+        }
     };
 
+    const userReactionCount = postReactionsList.filter((pr) => pr.userProfileId === tabloidUserObject.id && pr.reactionId === reaction.id);
     const reactionCount = postReactionsList.filter((pr) => pr.reactionId === reaction.id);
 
-    return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" alt="" src={reaction.imageLocation} /> {reactionCount.length} </button>
+    return <>
+        {reactionCount.length === 0 || userReactionCount.length === 0 ? (
+            <>
+                <button className="btn btn-secondary m-1" onClick={addReaction}>
+                <img className="reaction-btn" alt="" src={reaction.imageLocation} />
+                {reactionCount.length}
+                </button>
+            </>
+        ) : (
+            <button className="btn btn-primary m-1" >
+            <img className="reaction-btn" alt="" src={reaction.imageLocation} />
+            {reactionCount.length}
+            </button> 
+        )}
+        </>
 
 }
 
