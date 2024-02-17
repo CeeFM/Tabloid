@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardImg } from "reactstrap";
-import { Link } from "react-router-dom";
 import { addPostReaction, getpostreactionsbypostid } from "../../Managers/PostReactionManager";
 
 export const PostReaction = ({ post, reaction }) => {
@@ -16,24 +14,35 @@ export const PostReaction = ({ post, reaction }) => {
     const [postReactionsList, setPostReactionsList] = useState([]);
 
     const getPostsReactions = () => {
-        getpostreactionsbypostid(post.id).then((thesereactions) => setPostReactionsList(thesereactions));
-    };
+        getpostreactionsbypostid(post.id).then((postReactions) => {
+        setPostReactionsList(postReactions);
+        console.log(postReactionsList);
+    })
+    .catch((error) => {
+        console.error("OOPS I FUCKED UP WITH THIS ERROR:" , error);
+    });
+};
 
     useEffect(() => {
         getPostsReactions();
-    ;
       }, []);
 
     const addReaction = () => {
-        console.log(postReactionsList);
         const reactionToSend = {
             ...postReaction
         };
-        addPostReaction(reactionToSend);
+        addPostReaction(reactionToSend)
+        .then(() => getPostsReactions());
         window.location.reload();
       };
+    
+    const logState = () => {
+        console.log(reactionCount)
+    };
 
-    return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" src={reaction.imageLocation} />  </button>
+    const reactionCount = postReactionsList.filter((pr) => pr.reactionId === reaction.id);
+
+    return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" alt="" src={reaction.imageLocation} /> {reactionCount.length} </button>
 
 }
 
