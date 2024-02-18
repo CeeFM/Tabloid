@@ -7,9 +7,9 @@ import UserPostList from "./posts/MyPostList";
 import UserProfileDetails from "./UserProfiles/UserProfileDetails";
 import PostDetails from "./posts/PostDetails";
 import PostForm from "./posts/PostForm";
-import { CategoryList } from "./Categories/CategoryList";
-import CategoryForm from "./Categories/CategoryForm";
-import { EditCategory } from "./Categories/CategoryEdit";
+import { CategoryList } from "./categories/CategoryList";
+import CategoryForm from "./categories/CategoryForm";
+import { EditCategory } from "./categories/CategoryEdit";
 
 
 export default function ApplicationViews() {

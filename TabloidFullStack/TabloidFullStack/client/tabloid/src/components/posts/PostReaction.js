@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addPostReaction, getpostreactionsbypostid } from "../../Managers/PostReactionManager";
+import { addPostReaction, deletePostReaction, getpostreactionsbypostid } from "../../Managers/PostReactionManager";
 
 export const PostReaction = ({ post, reaction }) => {
     const localTabloidUser = localStorage.getItem("userProfile");
@@ -36,14 +36,11 @@ export const PostReaction = ({ post, reaction }) => {
         window.location.reload();
       };
     
-    const buttonChange = () => {
-        if (reactionCount.length === 0 || userReactionCount.length === 0) {
-            return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" alt="" src={reaction.imageLocation} /> {reactionCount.length} </button>  
-        }
-        else {
-            return <button className="btn btn-secondary m-1" onClick={addReaction}><img className="reaction-btn" alt="" src={reaction.imageLocation} /> {reactionCount.length} </button>
-        }
-    };
+    const deleteReaction = () => {
+        deletePostReaction(userReactionCount[0].id);
+        window.location.reload();
+
+    }
 
     const userReactionCount = postReactionsList.filter((pr) => pr.userProfileId === tabloidUserObject.id && pr.reactionId === reaction.id);
     const reactionCount = postReactionsList.filter((pr) => pr.reactionId === reaction.id);
@@ -58,7 +55,7 @@ export const PostReaction = ({ post, reaction }) => {
                 </button>
             </>
         ) : (
-            <button className="btn btn-primary m-1" >
+            <button className="btn btn-primary m-1" id="reacted" onClick={deleteReaction}>
             <img className="reaction-btn" alt={reaction.name} src={reaction.imageLocation} />
             <br />
             <span className="h6 m-3">{reactionCount.length}</span>

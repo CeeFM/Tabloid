@@ -1,4 +1,5 @@
-﻿using TabloidFullStack.Models;
+﻿using Microsoft.Data.SqlClient;
+using TabloidFullStack.Models;
 using TabloidFullStack.Utils;
 
 namespace TabloidFullStack.Repositories
@@ -87,6 +88,26 @@ namespace TabloidFullStack.Repositories
                     cmd.Parameters.AddWithValue("@UserProfileId", postreaction.UserProfileId);
 
                     postreaction.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public void Delete(int reactionId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE from PostReaction
+                            WHERE Id = @id
+                        ";
+
+                    cmd.Parameters.AddWithValue("@id", reactionId);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
