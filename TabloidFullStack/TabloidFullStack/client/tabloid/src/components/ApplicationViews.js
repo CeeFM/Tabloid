@@ -12,13 +12,14 @@ import {TagList}  from "./tags/TagList";
 import {CategoryList} from "./categories/CategoryList";
 import TagForm from "./tags/TagForm";
 import SubcriptionList from "./Hello";
+import Hello from "./Hello";
 
 export default function ApplicationViews() {
 
   return (
     <>
       <Routes>
-      <Route path="/" element={<Hello />} />
+      <Route path="/" element={<Hello/>}/>
         <Route path="/" element={<SubcriptionList />} />
         <Route path="/users" element={<UserProfileList />} />
         <Route path="/users/:id" element={<UserProfileDetails />} />

@@ -49,4 +49,49 @@ public class TagRepository : BaseRepository, ITagRepository
             }
         }
     }
+    //delete
+
+    public List<Tag> GetById(int id)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "SELECT Id, Name FROM Tag " +
+                                  "WHERE Id = @Id";
+                DbUtils.AddParameter(cmd, "@Id", id);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new List<Tag>() {new Tag()
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        Name = reader.GetString(reader.GetOrdinal("Name")),
+                    }};
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+    }
+    public void Delete(int tagId)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM Tag " +
+                                  "WHERE Id = @TagId";
+                DbUtils.AddParameter(cmd, "@TagId", tagId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
 }
