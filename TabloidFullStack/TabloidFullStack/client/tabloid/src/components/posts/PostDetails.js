@@ -3,26 +3,30 @@ import { getPost } from "../../Managers/PostManager";
 import { useParams } from "react-router-dom";
 import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getcommentsbypostid, deleteComment } from "../../Managers/CommentManager";
-import { Comment } from "./Comment";
+import { getcommentsbypostid } from "../../Managers/CommentManager";
+import { Comment } from "./Comment"; 
 import CommentForm from "./CommentForm";
+import { getreactions } from "../../Managers/PostReactionManager";
+import { PostReaction } from "./PostReaction";
 import SubscriptionButton from "./SubscribeButton";
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
   const [comments, setComments] = useState([]);
+  const [reactions, setReactions] = useState([]);
   const { id } = useParams();
 
   const getpostcomments = () => {
     getcommentsbypostid(id).then((thesecomments) => setComments(thesecomments));
   }
 
-  useEffect(() => {
-    getPost(id).then(setPost);
-  }, []);
+const getReaction = () => {
+  getreactions().then((thesereactions) => setReactions(thesereactions));
+}
 
   useEffect(() => {
-    getpostcomments();
+    getPost(id).then(setPost).then(getpostcomments).then(getReaction);
+;
   }, []);
 
   if (!post) {
@@ -47,15 +51,14 @@ export const PostDetails = () => {
   };
 
   const addComments = () => {
-    if (commentForm.style.display != "block") {
-      commentForm.style.display = "block";
-      addCommentBtn.innerHTML = "Hide Comment Form";
-    } else {
-      commentForm.style.display = "none";
-      addCommentBtn.innerHTML = "Add Comment";
-    }
-  };
-
+  if (commentForm.style.display != "block") {
+    commentForm.style.display = "block";
+    addCommentBtn.innerHTML = "Hide Comment Form";
+  } else {
+    commentForm.style.display = "none";
+    addCommentBtn.innerHTML = "Add Comment";
+  }
+    };
 
   return (
     <>
@@ -76,6 +79,14 @@ export const PostDetails = () => {
             </p>
             <p>Published: {formattedDate}</p>
           </CardBody>
+          <div className="text-center">
+
+{reactions.map((reaction) => (
+    <>
+      <PostReaction key={reaction.id} post={post} reaction={reaction} />
+    </>
+  ))}
+  </div>
           <SubscriptionButton post={post} />
         </Card>
       </div>
@@ -86,7 +97,7 @@ export const PostDetails = () => {
       <div className="col-sm-12 col-md-6 offset-md-3" id="comment-form" style={{ display: "none" }}>
         <CommentForm post={post} />
       </div>
-      <div className="col-sm-12 col-md-6 offset-md-3" id="comments">
+      <div className="col-sm-12 col-md-6 offset-md-3" id="comments" style={{display: "block"}}>
         <br />
         <div className="text-center"><strong>COMMENTS:</strong></div>
         <br />

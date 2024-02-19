@@ -6,17 +6,22 @@ import UserPostList from "./posts/MyPostList";
 import UserProfileDetails from "./UserProfiles/UserProfileDetails";
 import PostDetails from "./posts/PostDetails";
 import PostForm from "./posts/PostForm";
+import CategoryForm from "./categories/CategoryForm";
+import {EditCategory} from "./categories/CategoryEdit";
+import {TagList}  from "./tags/TagList";
+import {CategoryList} from "./categories/CategoryList";
+import TagForm from "./tags/TagForm";
 import { CategoryList } from "./Categories/CategoryList";
 import CategoryForm from "./Categories/CategoryForm";
 import { EditCategory } from "./Categories/CategoryEdit";
 import SubcriptionList from "./Hello";
-
 
 export default function ApplicationViews() {
 
   return (
     <>
       <Routes>
+      <Route path="/" element={<Hello />} />
         <Route path="/" element={<SubcriptionList />} />
         <Route path="/users" element={<UserProfileList />} />
         <Route path="/users/:id" element={<UserProfileDetails />} />
@@ -24,10 +29,11 @@ export default function ApplicationViews() {
         <Route path="/addpost" element={<PostForm />} />
         <Route path="/posts/:id" element={<PostDetails/>} />
         <Route path="/userposts" element={<UserPostList />} />
-        <Route path="/category" element={<CategoryList />} />
         <Route path="/category/form" element={<CategoryForm/>} />
         <Route path="/category/edit/:id" element={<EditCategory/>} />
-
+        <Route path="/tag" element={<TagList/>} />
+        <Route path="/category" element={<CategoryList/>} />
+        <Route path="/tag/form" element={<TagForm/>} />
       </Routes>
     </>
   );
