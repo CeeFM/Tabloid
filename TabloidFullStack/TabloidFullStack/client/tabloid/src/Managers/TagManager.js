@@ -29,3 +29,12 @@ export const deleteTag = (id) => {
       method: "DELETE"
     })
   }
+export const editTag = (tag) => {
+    return fetch(`${baseUrl}/${tag.id}`, {
+        method: "PUT", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tag),
+    });
+};

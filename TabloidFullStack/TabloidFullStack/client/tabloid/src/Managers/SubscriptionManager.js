@@ -9,8 +9,11 @@ export const addSubscription = (singleSubscription) => {
       body: JSON.stringify(singleSubscription),
     });
   };
-  
 
+  export const deleteSubscription = (subscriberUserProfileId, providerUserProfileId) => {
+    return fetch(`https://localhost:5001/api/Subscription/${subscriberUserProfileId}/${providerUserProfileId}`, { method: "DELETE" })
+  }
+  
   export const getAllSubscriptionsByUser = (id) => {
     return fetch(`https://localhost:5001/api/Subscription/${id}`)
       .then((res) => res.json())
