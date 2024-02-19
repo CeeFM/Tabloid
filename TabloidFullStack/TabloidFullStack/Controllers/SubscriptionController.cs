@@ -37,5 +37,14 @@ namespace TabloidFullStack.Controllers
 
             return Ok(_subscriptionRepository.GetSubscriptionsByUserId(userId));
         }
+
+
+        [HttpDelete("{subscriberUserProfileId}/{providerUserProfileId}")]
+        public IActionResult Delete(int subscriberUserProfileId, int providerUserProfileId)
+        {
+            _subscriptionRepository.Delete(subscriberUserProfileId, providerUserProfileId);
+            return NoContent();
+        }
+
     }
 }

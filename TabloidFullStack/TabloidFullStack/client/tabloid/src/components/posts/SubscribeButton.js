@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { addSubscription, getAllSubscriptionsByUser } from '../../Managers/SubscriptionManager';
+import React, { useState, useEffect } from 'react';
+import { addSubscription, getAllSubscriptionsByUser, deleteSubscription } from '../../Managers/SubscriptionManager';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
 const SubscriptionButton = ({ post }) => {
@@ -7,6 +7,26 @@ const SubscriptionButton = ({ post }) => {
   const [modal, setModal] = useState(false); 
   const toggleModal = () => setModal(!modal); 
 
+  // checks for subscription
+  useEffect(() => {
+    const checkSubscription = async () => {
+      try {
+        const localTabloidUser = localStorage.getItem('userProfile');
+        const tabloidUserObject = JSON.parse(localTabloidUser);
+        const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id);
+        const alreadySubscribed = subscriptions.some(
+          subscription => subscription.providerUserProfileId === post.userProfileId
+        );
+        setIsSubscribed(alreadySubscribed);
+      } catch (error) {
+        console.error('Error checking subscription:', error.message);
+      }
+    };
+
+    checkSubscription();
+  }, [post.userProfileId]);
+
+  // handles adding a subscription
   const handleSubscriptionClick = async () => {
     try {
 
@@ -18,12 +38,13 @@ const SubscriptionButton = ({ post }) => {
       const subscriptions = await getAllSubscriptionsByUser(tabloidUserObject.id);
       console.log(subscriptions);
 
-      // set a conditional to check if pro
+      // Set a conditional to check if the userprofileID for the provider matches the post userProfileId
       const alreadySubscribed = subscriptions.some(
         subscription => subscription.providerUserProfileId === post.userProfileId
       );
 
       if (alreadySubscribed) {
+        setIsSubscribed(true);
         toggleModal();
         return;
       }
@@ -50,11 +71,29 @@ const SubscriptionButton = ({ post }) => {
     }
   };
 
+   // handles unsubscribing to a user 
+   const handleUnsubscribeClick = async () => {
+    try {
+      const localTabloidUser = localStorage.getItem('userProfile');
+      const tabloidUserObject = JSON.parse(localTabloidUser);
+      const response = await deleteSubscription(tabloidUserObject.id, post.userProfileId);
+
+      if (response.ok) {
+        setIsSubscribed(false);
+      } else {
+        console.log("Error unsubscribing");
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
   return (
     <div>
-      <button onClick={handleSubscriptionClick}>
+      <Button onClick={isSubscribed ? handleUnsubscribeClick : handleSubscriptionClick}
+       style={{ backgroundColor: isSubscribed ? 'rgb(255, 51, 53)' : 'rgb(0, 204, 153)' }}>
         {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-      </button>
+      </Button>
 
       <Modal isOpen={modal} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>Already Subscribed</ModalHeader>

@@ -60,6 +60,27 @@ namespace TabloidFullStack.Repositories
             }
         }
 
+        public void Delete(int subscriberUserProfileId, int providerUserProfileId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE from Subscription
+                            WHERE SubscriberUserProfileId = @subscriberUserProfileId 
+                            AND ProviderUserProfileId = @providerUserProfileId
+                        ";
+                    cmd.Parameters.AddWithValue("@subscriberUserProfileId ", subscriberUserProfileId);
+                    cmd.Parameters.AddWithValue("@providerUserProfileId", providerUserProfileId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<Subscription> GetSubscriptionsByUserId(int id)
         {
             using (var conn = Connection)
