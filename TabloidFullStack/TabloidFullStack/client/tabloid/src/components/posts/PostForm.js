@@ -11,7 +11,8 @@ export const PostForm = () => {
     const [categories, setCategories] = useState([]);
 
     const getCategories = () => {
-        getAllCategories().then((categories) => setCategories(categories));
+        getAllCategories().then(
+            (categories) => setCategories(categories));
     }
 
     useEffect(() => {
