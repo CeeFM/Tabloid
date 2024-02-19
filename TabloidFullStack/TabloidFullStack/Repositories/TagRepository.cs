@@ -92,6 +92,11 @@ public class TagRepository : BaseRepository, ITagRepository
                 DbUtils.AddParameter(cmd, "@TagId", tagId);
                 cmd.ExecuteNonQuery();
 
+            }
+        }
+    }
+
+
     public void UpdateTag(Tag tag)
     {
         using (SqlConnection conn = Connection)

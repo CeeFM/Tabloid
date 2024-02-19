@@ -26,7 +26,7 @@ namespace TabloidFullStack.Controllers
             return CreatedAtAction(
                 "Get", new { id = tag.Id }, tag);
         }
-        
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -46,29 +46,31 @@ namespace TabloidFullStack.Controllers
             catch (Exception ex)
             {
                 return StatusCode(404, $"Server Error: {ex.Message}");
-}
-        [HttpPut("{id}")]
-        public IActionResult UpdateTag(int id, Tag tag)
-        {
-            if (id != tag.Id)
-            {
-                return BadRequest();
             }
-
-            _tagRepository.UpdateTag(tag);
-
-            return NoContent();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            var tag = _tagRepository.GetTagById(id);
-            if (tag == null)
+            [HttpPut("{id}")]
+            public IActionResult UpdateTag(int id, Tag tag)
             {
-                return NotFound();
+                if (id != tag.Id)
+                {
+                    return BadRequest();
+                }
+
+                _tagRepository.UpdateTag(tag);
+
+                return NoContent();
             }
-            return Ok(tag);
+
+            [HttpGet("{id}")]
+            public IActionResult Get(int id)
+            {
+                var tag = _tagRepository.GetTagById(id);
+                if (tag == null)
+                {
+                    return NotFound();
+                }
+                return Ok(tag);
+            }
         }
     }
-}

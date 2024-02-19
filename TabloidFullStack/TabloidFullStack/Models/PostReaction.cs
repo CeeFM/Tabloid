@@ -6,5 +6,6 @@
         public int PostId { get; set; }
         public int UserProfileId { get; set; }
         public int ReactionId { get; set; }
+
     }
 }
