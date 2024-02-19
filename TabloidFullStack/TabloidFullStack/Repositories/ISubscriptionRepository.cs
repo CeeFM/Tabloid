@@ -6,5 +6,6 @@ namespace TabloidFullStack.Repositories
     {
         void Add(Subscription subscription);
         List<Subscription> GetAll();
+        List<Subscription> GetSubscriptionsByUserId(int id);
     }
 }
