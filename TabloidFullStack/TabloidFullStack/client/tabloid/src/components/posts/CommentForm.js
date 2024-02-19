@@ -57,8 +57,7 @@ export const CommentForm = ({ post }) => {
 
             .catch(error => {
                 console.error('Error adding comment:', error);
-                // Handle errors here, such as displaying an error message to the user
-            });
+                });
     }
 
     return (

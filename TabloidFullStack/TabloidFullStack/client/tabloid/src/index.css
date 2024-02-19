@@ -21,3 +21,9 @@ code {
 #userImg {
   width: 10vw;
 }
+
+.reaction-btn {
+  height: 3.5rem;
+  width: 3.5rem;
+  border-radius: 1rem;
+}
