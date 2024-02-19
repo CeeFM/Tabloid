@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Hello from "./Hello";
 import UserProfileList from "./UserProfiles/UserProfileList";
 import PostList from "./posts/PostList";
 import UserPostList from "./posts/MyPostList";
@@ -10,6 +9,7 @@ import PostForm from "./posts/PostForm";
 import { CategoryList } from "./Categories/CategoryList";
 import CategoryForm from "./Categories/CategoryForm";
 import { EditCategory } from "./Categories/CategoryEdit";
+import SubcriptionList from "./Hello";
 
 
 export default function ApplicationViews() {
@@ -17,7 +17,7 @@ export default function ApplicationViews() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<SubcriptionList />} />
         <Route path="/users" element={<UserProfileList />} />
         <Route path="/users/:id" element={<UserProfileDetails />} />
         <Route path="/posts" element={<PostList />} />

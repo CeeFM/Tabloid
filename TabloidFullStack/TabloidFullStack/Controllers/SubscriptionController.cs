@@ -29,5 +29,13 @@ namespace TabloidFullStack.Controllers
             _subscriptionRepository.Add(subscription);
             return NoContent();
         }
+
+
+        [HttpGet("{userId}")]
+        public IActionResult GetSubscriptionsByUserId(int userId)
+        {
+
+            return Ok(_subscriptionRepository.GetSubscriptionsByUserId(userId));
+        }
     }
 }
