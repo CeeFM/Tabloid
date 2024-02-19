@@ -10,11 +10,11 @@ import CategoryForm from "./categories/CategoryForm";
 import {EditCategory} from "./categories/CategoryEdit";
 import {TagList}  from "./tags/TagList";
 import {CategoryList} from "./categories/CategoryList";
+import TagForm from "./tags/TagForm";
 import { CategoryList } from "./Categories/CategoryList";
 import CategoryForm from "./Categories/CategoryForm";
 import { EditCategory } from "./Categories/CategoryEdit";
 import SubcriptionList from "./Hello";
-
 
 export default function ApplicationViews() {
 
@@ -33,6 +33,7 @@ export default function ApplicationViews() {
         <Route path="/category/edit/:id" element={<EditCategory/>} />
         <Route path="/tag" element={<TagList/>} />
         <Route path="/category" element={<CategoryList/>} />
+        <Route path="/tag/form" element={<TagForm/>} />
       </Routes>
     </>
   );

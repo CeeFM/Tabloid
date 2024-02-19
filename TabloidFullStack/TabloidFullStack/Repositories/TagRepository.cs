@@ -1,10 +1,12 @@
-﻿using TabloidFullStack.Models;
+﻿using Microsoft.Data.SqlClient;
+using TabloidFullStack.Models;
 using TabloidFullStack.Repositories;
 using TabloidFullStack.Utils;
 
 public class TagRepository : BaseRepository, ITagRepository
 {
     public TagRepository(IConfiguration configuration) : base(configuration) { }
+    //view
     public List<Tag> GetAll()
     {
         using (var conn = Connection)
@@ -28,6 +30,22 @@ public class TagRepository : BaseRepository, ITagRepository
                 }
                 reader.Close();
                 return tags;
+            }
+        }
+    }
+    //add
+    public void Add(Tag tag)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO Tag (Name)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@Name)";
+                DbUtils.AddParameter(cmd, "@Name", tag.Name);
+                tag.Id = (int)cmd.ExecuteScalar();
             }
         }
     }
