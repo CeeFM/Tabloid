@@ -17,4 +17,4 @@ export const addTag = (singleTag) => {
         body: JSON.stringify(singleTag),
     });
 };
-}
+
