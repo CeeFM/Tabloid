@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
   const [newTagName, setNewTagName] = useState('');
   const navigate = useNavigate()
   const handleSave = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     try {
       const newTag = {
         name: newTagName,
