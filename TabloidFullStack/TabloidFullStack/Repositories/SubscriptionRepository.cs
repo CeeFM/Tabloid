@@ -1,4 +1,5 @@
-﻿using TabloidFullStack.Models;
+﻿using Microsoft.Data.SqlClient;
+using TabloidFullStack.Models;
 using TabloidFullStack.Utils;
 
 namespace TabloidFullStack.Repositories
@@ -58,6 +59,49 @@ namespace TabloidFullStack.Repositories
                 }
             }
         }
+
+        public List<Subscription> GetSubscriptionsByUserId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT Id, SubscriberUserProfileId, ProviderUserProfileId, BeginDateTime, EndDateTime 
+                       FROM Subscription
+                       WHERE SubscriberUserProfileId = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+
+                    var subscriptions = new List<Subscription>();
+
+                    while (reader.Read())
+                    {
+                        subscriptions.Add(NewSubFromReader(reader));
+                    }
+
+                    reader.Close();
+
+                    return subscriptions;
+                }
+            }
+        }
+
+        private Subscription NewSubFromReader(SqlDataReader reader)
+        {
+            return new Subscription()
+            {
+                Id = DbUtils.GetInt(reader, "Id"),
+                SubscriberUserProfileId = DbUtils.GetInt(reader, "SubscriberUserProfileId"),
+                ProviderUserProfileId = DbUtils.GetInt(reader, "ProviderUserProfileId"),
+                BeginDateTime = DbUtils.GetDateTime(reader, "BeginDateTime"),
+                EndDateTime = DbUtils.GetNullableDateTime(reader, "EndDateTime")
+            };
+        }
+
 
     }
 }
