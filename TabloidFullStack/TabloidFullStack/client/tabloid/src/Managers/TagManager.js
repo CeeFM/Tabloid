@@ -24,6 +24,11 @@ export const getTagById = (id) => {
     );
 }
 
+export const deleteTag = (id) => {
+    return fetch(`${baseUrl}/${id}`, {
+      method: "DELETE"
+    })
+  }
 export const editTag = (tag) => {
     return fetch(`${baseUrl}/${tag.id}`, {
         method: "PUT", 
@@ -33,4 +38,3 @@ export const editTag = (tag) => {
         body: JSON.stringify(tag),
     });
 };
-

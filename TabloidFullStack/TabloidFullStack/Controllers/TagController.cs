@@ -26,7 +26,27 @@ namespace TabloidFullStack.Controllers
             return CreatedAtAction(
                 "Get", new { id = tag.Id }, tag);
         }
+        
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _tagRepository.GetById(id);
 
+                if (_tagRepository == null)
+                {
+                    return NotFound($"Category with ID {id} not found");
+                }
+
+                _tagRepository.Delete(id);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, $"Server Error: {ex.Message}");
+}
         [HttpPut("{id}")]
         public IActionResult UpdateTag(int id, Tag tag)
         {
