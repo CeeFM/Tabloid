@@ -7,5 +7,6 @@ namespace TabloidFullStack.Repositories
         List<PostReaction> GetAll();
         List<PostReaction> GetByPostId(int postId);
         void Add(PostReaction postreaction);
+        void Delete(int reactionId);
     }
 }

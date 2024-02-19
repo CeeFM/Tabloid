@@ -36,6 +36,13 @@ namespace TabloidFullStack.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _postReactionRepository.Delete(id);
+            return NoContent();
+        }
+
         //// GET: api/<PostReactionController>
         //[HttpGet]
         //public IEnumerable<string> Get()

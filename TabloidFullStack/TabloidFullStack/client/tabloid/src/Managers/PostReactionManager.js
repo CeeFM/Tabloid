@@ -29,3 +29,7 @@ export const getpostreactionsbypostid = (postid) => {
       body: JSON.stringify(postReaction),
     });
   };  
+
+  export const deletePostReaction = (id) => {
+    return fetch(`https://localhost:5001/api/postreaction/${id}`, { method: "DELETE" })
+  }
