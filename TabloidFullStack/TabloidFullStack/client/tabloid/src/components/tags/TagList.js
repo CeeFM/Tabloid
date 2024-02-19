@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllTags } from "../../Managers/TagManager";
+import { Button } from "reactstrap";
 
 export const TagList = () => {
     const [tags, setTags] = useState([]);
@@ -26,6 +27,7 @@ return (
             <tr key={tag.id} >
               <td>{tag.id}</td>
               <td>{tag.name}</td>
+              <Button onClick={(e) => { e.preventDefault(); navigate(`/tag/edit/${tag.id}`);}}> Edit Tag </Button>
             </tr>
           ))}
       </table>
